@@ -4,8 +4,8 @@
 version: "{build}"
 
 image:
-#  - Visual Studio 2015
-#  - Visual Studio 2017
+  - Visual Studio 2015
+  - Visual Studio 2017
   - Visual Studio 2019
 
 configuration:
@@ -144,13 +144,7 @@ install:
 #        }
 #    }
 - cmd: |
-    if NOT EXIST C:\Tools\vcpkg\packages\openimageio* (
-        echo "Installing OpenImageIO package and its dependencies."
-        vcpkg install --triplet=x64-windows openimageio
-    ) else (
-        echo "Upgrading OpenImageIO package and its dependencies."
-        vcpkg upgrade
-    )
+    ci_scripts\install-windows.bat
 
 
 # # One-line install/build zlib (for loadtests) into C:\Program Files\zlib
