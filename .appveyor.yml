@@ -144,7 +144,7 @@ install:
 #        }
 #    }
 - cmd: |
-    ci_scripts\install-windows.bat
+    ci_scripts\install_windows.bat
 
 
 # # One-line install/build zlib (for loadtests) into C:\Program Files\zlib
