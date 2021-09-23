@@ -53,6 +53,12 @@ for:
 build:
   verbosity: detailed
 
+cache:
+# How to know when to invalidate, i.e. what to make a dependency?
+# - c:\tools\vcpkg\installed -> dependency1, dependency2 ...
+  - c:\Tools\vcpkg\installed
+  - '%LocalAppData%\vcpkg'
+
 # Following is for GIT_TRACE: 1 above.
 #on_failure:
 #  - ps: Get-ChildItem .\.git\lfs\objects\logs\*.log | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
@@ -120,34 +126,38 @@ install:
 # ErrorActionPreference is unexpectedly set to Stop here the install
 # outputs a warning to stderr about Boost having long file names causing
 # the build to stop. Hence the override.
-- ps: |
-    $ErrorActionPreference = 'SilentlyContinue'
-    if (-not(Test-Path -Path c:\Tools\vcpkg\packages\openimageio* -PathType Container)) {
-        try {
-            echo "Installing OpenImageIO package and its dependencies."
-            vcpkg install OpenImageIO
-        } catch {
-            "vcpkg install exception: $_"
-        }
-    } else {
-        try {
-            echo "Upgrading OpenImageIO package and its dependencies."
-            vcpkg upgrade OpenImageIO
-        } catch {
-            "vcpkg upgrade exception: $_"
-        }
-    }
+#- ps: |
+#    $ErrorActionPreference = 'SilentlyContinue'
+#    if (-not(Test-Path -Path c:\Tools\vcpkg\packages\openimageio* -PathType Container)) {
+#        try {
+#            echo "Installing OpenImageIO package and its dependencies."
+#            vcpkg install --triplet=x64-windows openimageio
+#        } catch {
+#            "vcpkg install exception: $_"
+#        }
+#    } else {
+#        try {
+#            echo "Upgrading OpenImageIO package and its dependencies."
+#            vcpkg upgrade
+#        } catch {
+#            "vcpkg upgrade exception: $_"
+#        }
+#    }
+- cmd: |
+    if NOT EXIST C:\Tools\vcpkg\packages\openimageio* (
+        echo "Installing OpenImageIO package and its dependencies."
+        vcpkg install --triplet=x64-windows openimageio
+    ) else (
+        echo "Upgrading OpenImageIO package and its dependencies."
+        vcpkg upgrade
+    )
+
+
 # # One-line install/build zlib (for loadtests) into C:\Program Files\zlib
 # - ps: |
 #     Invoke-WebRequest -Uri https://raw.githubusercontent.com/horta/zlib.install/master/install.bat -OutFile install.bat
 #     ./install.bat
 
-cache:
-# How to know when to invalidate, i.e. what to make a dependency?
-# - c:\tools\vcpkg\installed -> dependency1, dependency2 ...
-  - c:\Tools\vcpkg\installed
-  - c:\Users\appveyor\AppData\Local\vcpkg
-#  - other_lib
 
 before_build:
 # Expand date keywords. -q is because the VS2019 image has a more
