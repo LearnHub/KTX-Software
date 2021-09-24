@@ -30,9 +30,12 @@ curl -o VulkanSDK-Installer.exe https://sdk.lunarg.com/sdk/download/%VULKAN_SDK_
 .\VulkanSDK-Installer.exe /S
 echo "Refresh the environment to pick up Doxygen & VulkanSDK changes."
 refreshenv
-
 popd
 @echo
+
+@echo "APPVEYOR_BUILD_FOLDER = %APPVEYOR_BUILD_FOLDER%"
+@echo "Current directory is"
+@cd
 
 @echo OFF
 REM Should we at some point need a newer version of vcpkg than is in
@@ -59,3 +62,6 @@ REM a subshell.
     vcpkg upgrade
 )
 
+@echo "APPVEYOR_BUILD_FOLDER = %APPVEYOR_BUILD_FOLDER%"
+@echo "Current directory is"
+@cd
