@@ -28,8 +28,9 @@ popd
 pushd C:\
 curl -o VulkanSDK-Installer.exe https://sdk.lunarg.com/sdk/download/%VULKAN_SDK_VER%/windows/VulkanSDK-%VULKAN_SDK_VER%-Installer.exe?Human=true
 .\VulkanSDK-Installer.exe /S
-echo "Refresh the environment to pick up Doxygen & VulkanSDK changes."
-refreshenv
+@echo "Refresh the environment to pick up Doxygen & VulkanSDK changes."
+@REM If we call `refreshenv` the script exits immediately after.
+call RefreshEnv.cmd
 popd
 @echo
 
