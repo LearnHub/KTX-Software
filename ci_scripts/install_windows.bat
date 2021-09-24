@@ -49,8 +49,7 @@ REM prints a warning about file name lengths that causes PS to stop even when
 REM the shell's $ErrorActionPreference = Continue. I suspect vcpkg is invoking
 REM a subshell.
 @echo ON
-dir C:\Tools\vcpkg\packages
-@if NOT EXIST C:\Tools\vcpkg\packages\openimageio* (
+@if NOT EXIST C:\Tools\vcpkg\installed (
     @echo "Install OpenImageIO package and its dependencies."
     @REM --triplet not supported in VS2015 environment so use older style.
     @REM vcpkg install --triplet=x64-windows openimageio
