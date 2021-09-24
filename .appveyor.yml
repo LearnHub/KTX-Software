@@ -107,8 +107,6 @@ before_build:
 
 build_script:
 - ps: |
-    # Pick up PATH changes made by Doxygen installer.
-    refreshenv
     $ErrorActionPreference = 'Stop'
     # Configure and build with SSE support (default).
     $env:KTX_BUILD_DIR = "$env:BUILD_DIR"
