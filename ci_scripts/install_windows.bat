@@ -34,10 +34,6 @@ call RefreshEnv.cmd
 popd
 @echo
 
-@echo "APPVEYOR_BUILD_FOLDER = %APPVEYOR_BUILD_FOLDER%"
-@echo "Current directory is"
-@cd
-
 @echo OFF
 REM Should we at some point need a newer version of vcpkg than is in
 REM build worker image, do the following.
@@ -53,6 +49,7 @@ REM prints a warning about file name lengths that causes PS to stop even when
 REM the shell's $ErrorActionPreference = Continue. I suspect vcpkg is invoking
 REM a subshell.
 @echo ON
+dir C:\Tools\vcpkg\packages
 @if NOT EXIST C:\Tools\vcpkg\packages\openimageio* (
     @echo "Install OpenImageIO package and its dependencies."
     @REM --triplet not supported in VS2015 environment so use older style.
@@ -62,7 +59,3 @@ REM a subshell.
     @echo "Upgrade OpenImageIO package and its dependencies."
     vcpkg upgrade
 )
-
-@echo "APPVEYOR_BUILD_FOLDER = %APPVEYOR_BUILD_FOLDER%"
-@echo "Current directory is"
-@cd
