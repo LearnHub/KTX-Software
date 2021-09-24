@@ -98,9 +98,9 @@ before_build:
 # about the number of paths updated.
 - ps: |
     ./install-gitconfig.bat
-    @echo "Pull only Windows binaries."
+    echo "Pull only Windows binaries."
     git lfs pull --include=other_lib/win
-    @echo "Expand date keywords."
+    echo "Expand date keywords."
     rm TODO.md, lib/mainpage.md, pkgdoc/pages.md
     git checkout -q TODO.md lib/mainpage.md pkgdoc/pages.md
     git status
