@@ -13,7 +13,7 @@ ASTC_ISA=${ASTC_ISA:-'ISA_NONE=ON'}
 
 echo "Configure KTX-Software (Android $ANDROID_ABI Release)"
 cmake . -G Ninja -B "build-android-$ANDROID_ABI" \
--DANDROID_PLATFORM=android-24 \
+-DANDROID_PLATFORM=android-22 \
 -DANDROID_ABI="$ANDROID_ABI" \
 -DANDROID_NDK="$ANDROID_NDK" \
 -DCMAKE_TOOLCHAIN_FILE="$ANDROID_NDK/build/cmake/android.toolchain.cmake" \
